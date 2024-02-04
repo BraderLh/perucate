@@ -2,6 +2,7 @@ package com.balh.perucate.entity;
 
 import com.balh.perucate.entity.common.Audit;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "student")
+@Table(name = "students")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -40,17 +41,18 @@ public class StudentsEntity extends Audit {
     private int age;
 
     @ManyToOne
-    @MapsId("classroomId")
-    @JoinColumn(name = "classroom_id_classroom", referencedColumnName = "id_classroom", nullable = false)
-    private ClassroomEntity classroomEntity;
-
-    @ManyToOne
     @JoinColumn(name = "document_type_id_document_type", referencedColumnName = "id_documents_type", nullable = false)
     private DocumentsTypeEntity documentsTypeEntity;
 
-    @OneToMany(mappedBy = "studentEntityEnrolled",cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "studentsEntityEnrolled", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @JsonManagedReference(value = "students-enrollments")
     private Set<EnrollmentsEntity> enrollmentsStudent = new HashSet<>();
 
-    @OneToMany(mappedBy = "studentEntity", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "studentsEntity", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    //@JsonManagedReference
     private Set<ScoreEntity> scoreStudentEntitySet = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_classroom", referencedColumnName = "id_classroom")
+    private ClassroomEntity classroomEntity;
 }

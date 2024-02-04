@@ -33,12 +33,14 @@ public class ClassroomEntity extends Audit {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_course", referencedColumnName = "id_course")
-    private CourseEntity courseEntity;
+    private CoursesEntity coursesEntity;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_teacher", referencedColumnName = "id_teacher")
     private TeachersEntity teachersEntity;
 
-    @OneToMany(mappedBy = "classroomEntity", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "classroomEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //@JoinColumn(name = "id_student", referencedColumnName = "id_student")
     private Set<StudentsEntity> studentsEntitySet = new HashSet<>();
+
 }

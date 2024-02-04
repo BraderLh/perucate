@@ -35,5 +35,5 @@ public class ExamEntity extends Audit {
 
     @OneToOne
     @JoinColumn(name = "id_course", referencedColumnName = "id_course", nullable = false)
-    private CourseEntity courseEntity;
+    private CoursesEntity coursesEntity;
 }

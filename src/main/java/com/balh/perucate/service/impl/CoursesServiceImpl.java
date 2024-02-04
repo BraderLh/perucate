@@ -3,7 +3,7 @@ package com.balh.perucate.service.impl;
 import com.balh.perucate.agreggates.constants.Constants;
 import com.balh.perucate.agreggates.request.RequestCourse;
 import com.balh.perucate.agreggates.response.ResponseBase;
-import com.balh.perucate.entity.CourseEntity;
+import com.balh.perucate.entity.CoursesEntity;
 import com.balh.perucate.repository.CoursesRepository;
 import com.balh.perucate.service.CoursesService;
 import com.balh.perucate.util.validations.CourseValidation;
@@ -28,9 +28,9 @@ public class CoursesServiceImpl implements CoursesService {
     public ResponseBase createCourse(RequestCourse requestCourse) {
         boolean validateInput = courseValidation.validateInput(requestCourse);
         if (validateInput) {
-            CourseEntity courseEntity = getEntityCreate(requestCourse);
-            coursesRepository.save(courseEntity);
-            return new ResponseBase(Constants.CODE_SUCCESS, Constants.MESS_SUCCESS, Optional.of(courseEntity));
+            CoursesEntity coursesEntity = getEntityCreate(requestCourse);
+            coursesRepository.save(coursesEntity);
+            return new ResponseBase(Constants.CODE_SUCCESS, Constants.MESS_SUCCESS, Optional.of(coursesEntity));
         } else {
             return new ResponseBase(Constants.CODE_ERROR, Constants.MESS_ERROR_DATA_NOT_VALID, Optional.empty());
         }
@@ -39,11 +39,11 @@ public class CoursesServiceImpl implements CoursesService {
     @Override
     public ResponseBase deleteCourse(Integer id) {
         if (coursesRepository.existsById(id)) {
-            Optional<CourseEntity> courseEntityToDelete = coursesRepository.findById(id);
+            Optional<CoursesEntity> courseEntityToDelete = coursesRepository.findById(id);
             if (courseEntityToDelete.isPresent()) {
-                CourseEntity courseEntityDeleted = getEntityDelete(courseEntityToDelete.get());
-                coursesRepository.save(courseEntityDeleted);
-                return new ResponseBase(Constants.CODE_SUCCESS, Constants.MESS_SUCCESS, Optional.of(courseEntityDeleted));
+                CoursesEntity coursesEntityDeleted = getEntityDelete(courseEntityToDelete.get());
+                coursesRepository.save(coursesEntityDeleted);
+                return new ResponseBase(Constants.CODE_SUCCESS, Constants.MESS_SUCCESS, Optional.of(coursesEntityDeleted));
             } else {
                 return new ResponseBase(Constants.CODE_ERROR, Constants.MESS_ERROR_NOT_DELETE, Optional.empty());
             }
@@ -55,7 +55,7 @@ public class CoursesServiceImpl implements CoursesService {
     @Override
     public ResponseBase findOneCourse(Integer id) {
         if (coursesRepository.existsById(id)) {
-            Optional<CourseEntity> courseEntityToFind = coursesRepository.findById(id);
+            Optional<CoursesEntity> courseEntityToFind = coursesRepository.findById(id);
             if(courseEntityToFind.isPresent()) {
                 return new ResponseBase(Constants.CODE_SUCCESS, Constants.MESS_SUCCESS, courseEntityToFind);
             } else {
@@ -68,42 +68,42 @@ public class CoursesServiceImpl implements CoursesService {
 
     @Override
     public ResponseBase findAllCourses() {
-        List<CourseEntity> courseEntityList = coursesRepository.findAll();
-        if (!courseEntityList.isEmpty()) {
-            courseEntityList.sort(Comparator.comparingInt(CourseEntity::getIdCourse));
-            return new ResponseBase(Constants.CODE_SUCCESS, Constants.MESS_SUCCESS, Optional.of(courseEntityList));
+        List<CoursesEntity> coursesEntityList = coursesRepository.findAll();
+        if (!coursesEntityList.isEmpty()) {
+            coursesEntityList.sort(Comparator.comparingInt(CoursesEntity::getIdCourse));
+            return new ResponseBase(Constants.CODE_SUCCESS, Constants.MESS_SUCCESS, Optional.of(coursesEntityList));
         } else {
             return new ResponseBase(Constants.CODE_ERROR, Constants.MESS_ZERO_ROWS, Optional.empty());
         }
     }
 
-    private CourseEntity getEntityCreate(RequestCourse requestCourse) {
-        CourseEntity courseEntity = new CourseEntity();
-        courseEntity.setCode(requestCourse.getCode());
-        courseEntity.setName(requestCourse.getName());
-        courseEntity.setBibliography(requestCourse.getBibliography());
-        courseEntity.setDescription(requestCourse.getDescription());
-        courseEntity.setDateCreate(new Timestamp(System.currentTimeMillis()));
-        courseEntity.setStatus(Constants.STATUS_ACTIVE);
-        courseEntity.setUserCreate(Constants.AUDIT_ADMIN);
-        return courseEntity;
+    private CoursesEntity getEntityCreate(RequestCourse requestCourse) {
+        CoursesEntity coursesEntity = new CoursesEntity();
+        coursesEntity.setCode(requestCourse.getCode());
+        coursesEntity.setName(requestCourse.getName());
+        coursesEntity.setBibliography(requestCourse.getBibliography());
+        coursesEntity.setDescription(requestCourse.getDescription());
+        coursesEntity.setDateCreate(new Timestamp(System.currentTimeMillis()));
+        coursesEntity.setStatus(Constants.STATUS_ACTIVE);
+        coursesEntity.setUserCreate(Constants.AUDIT_ADMIN);
+        return coursesEntity;
     }
 
-    private CourseEntity getEntityDelete(CourseEntity courseEntity) {
-        courseEntity.setDateDelete(new Timestamp(System.currentTimeMillis()));
-        courseEntity.setStatus(Constants.STATUS_INACTIVE);
-        courseEntity.setUserDelete(Constants.AUDIT_ADMIN);
-        return courseEntity;
+    private CoursesEntity getEntityDelete(CoursesEntity coursesEntity) {
+        coursesEntity.setDateDelete(new Timestamp(System.currentTimeMillis()));
+        coursesEntity.setStatus(Constants.STATUS_INACTIVE);
+        coursesEntity.setUserDelete(Constants.AUDIT_ADMIN);
+        return coursesEntity;
     }
 
-    private CourseEntity getEntityUpdate(RequestCourse requestCourse, CourseEntity courseEntity) {
-        courseEntity.setCode(requestCourse.getCode());
-        courseEntity.setName(requestCourse.getName());
-        courseEntity.setBibliography(requestCourse.getBibliography());
-        courseEntity.setDescription(requestCourse.getDescription());
-        courseEntity.setDateModify(new Timestamp(System.currentTimeMillis()));
-        courseEntity.setUserModify(Constants.AUDIT_ADMIN);
-        return courseEntity;
+    private CoursesEntity getEntityUpdate(RequestCourse requestCourse, CoursesEntity coursesEntity) {
+        coursesEntity.setCode(requestCourse.getCode());
+        coursesEntity.setName(requestCourse.getName());
+        coursesEntity.setBibliography(requestCourse.getBibliography());
+        coursesEntity.setDescription(requestCourse.getDescription());
+        coursesEntity.setDateModify(new Timestamp(System.currentTimeMillis()));
+        coursesEntity.setUserModify(Constants.AUDIT_ADMIN);
+        return coursesEntity;
     }
 
     @Override
@@ -111,11 +111,11 @@ public class CoursesServiceImpl implements CoursesService {
         boolean validationInput = courseValidation.validateInput(requestCourse);
         if (validationInput) {
             if (coursesRepository.existsById(id)) {
-                Optional<CourseEntity> courseEntityToUpdate = coursesRepository.findById(id);
+                Optional<CoursesEntity> courseEntityToUpdate = coursesRepository.findById(id);
                 if (courseEntityToUpdate.isPresent()) {
-                    CourseEntity courseEntityUpdated = getEntityUpdate(requestCourse, courseEntityToUpdate.get());
-                    coursesRepository.save(courseEntityUpdated);
-                    return new ResponseBase(Constants.CODE_SUCCESS, Constants.MESS_SUCCESS, Optional.of(courseEntityUpdated));
+                    CoursesEntity coursesEntityUpdated = getEntityUpdate(requestCourse, courseEntityToUpdate.get());
+                    coursesRepository.save(coursesEntityUpdated);
+                    return new ResponseBase(Constants.CODE_SUCCESS, Constants.MESS_SUCCESS, Optional.of(coursesEntityUpdated));
                 } else {
                     return new ResponseBase(Constants.CODE_ERROR, Constants.MESS_ERROR_NOT_UPDATE, Optional.empty());
                 }

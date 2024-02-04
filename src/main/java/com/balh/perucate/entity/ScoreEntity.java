@@ -25,14 +25,14 @@ public class ScoreEntity extends Audit {
     int score;
 
     @OneToOne
-    @JoinColumn(name = "exam_id_exam", referencedColumnName = "id_exam")
+    @JoinColumn(name = "exam_id_exam", referencedColumnName = "id_exam", nullable = false)
     private ExamEntity examEntity;
 
     @ManyToOne
     @JoinColumn(name = "student_id_student", referencedColumnName = "id_student", nullable = false)
     private StudentsEntity studentsEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id_teacher", referencedColumnName = "id_teacher", nullable = false)
     private TeachersEntity teachersEntity;
 }

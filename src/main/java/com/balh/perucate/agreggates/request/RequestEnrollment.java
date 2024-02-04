@@ -1,10 +1,11 @@
 package com.balh.perucate.agreggates.request;
 
-import java.sql.Timestamp;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class RequestEnrollment {
-    private int courseEntityEnrolledId;
+    private int coursesEntityEnrolledId;
     private int studentsEntityEnrolledId;
-    private int cancelled;
-    private String cancellationReason;
 }

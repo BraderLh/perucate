@@ -13,9 +13,14 @@ public class ScoreValidation {
         if (requestScore == null) {
             return false;
         }
+
+        if (requestScore.getScore()<0 || requestScore.getScore()>20) {
+            return false;
+        }
+
         return isNullOrEmpty(String.valueOf(requestScore.getScore())) ||
-                isNullOrEmpty(String.valueOf(requestScore.getCourseEntityId())) ||
-                isNullOrEmpty(String.valueOf(requestScore.getStudentEntityId())) ||
-                isNullOrEmpty(String.valueOf(requestScore.getTeacherEntityId()));
+                isNullOrEmpty(String.valueOf(requestScore.getExamEntity())) ||
+                isNullOrEmpty(String.valueOf(requestScore.getStudentsEntityId())) ||
+                isNullOrEmpty(String.valueOf(requestScore.getTeachersEntityId()));
     }
 }

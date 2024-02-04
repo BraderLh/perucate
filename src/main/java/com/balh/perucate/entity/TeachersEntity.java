@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "teacher")
+@Table(name = "teachers")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -53,15 +53,19 @@ public class TeachersEntity extends Audit {
 
     @Column(name = "age", nullable = false)
     private int age;
+
+    @ManyToOne
+    @JoinColumn(name = "document_type_id_document_type", referencedColumnName = "id_documents_type", nullable = false)
+    private DocumentsTypeEntity documentsTypeEntity;
     
-    @OneToMany(mappedBy = "teacherEntity", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "teachersEntity", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<ScoreEntity> scoreTeacherEntitySet = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "teacher_course",
             joinColumns = @JoinColumn(name = "id_teacher"),
             inverseJoinColumns = @JoinColumn(name = "id_course")
     )
-    private Set<CourseEntity> courseEntitiesSet = new HashSet<>();
+    private Set<CoursesEntity> courseEntitiesSet = new HashSet<>();
 }

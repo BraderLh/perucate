@@ -11,64 +11,53 @@ CREATE TABLE IF NOT EXISTS users (
 	date_modif TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS course (
+CREATE TABLE IF NOT EXISTS courses (
 	id_course SERIAL PRIMARY KEY,
 	code VARCHAR(45) NOT NULL,
 	name VARCHAR(45) NOT NULL,
-	status INT NOT NULL,
-	user_create VARCHAR(45),
-	date_create TIMESTAMP,
-	user_delete VARCHAR(45),
-	date_delete TIMESTAMP,
-	user_modif VARCHAR(45),
-	date_modif TIMESTAMP
+	bibliography VARCHAR(255) NOT NULL,
+	description VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS documents_type (
 	id_documents_type SERIAL PRIMARY KEY,
 	cod_type VARCHAR(45) NOT NULL,
-	desc_type VARCHAR(45) NOT NULL,
-	status INT NOT NULL,
-	user_create VARCHAR(45),
-	date_create TIMESTAMP,
-	user_delete VARCHAR(45),
-	date_delete TIMESTAMP,
-	user_modif VARCHAR(45),
-	date_modif TIMESTAMP
+	desc_type VARCHAR(45) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS student (
+CREATE TABLE IF NOT EXISTS students (
 	id_student SERIAL PRIMARY KEY,
+	num_document VARCHAR(8) NOT NULL,
 	name VARCHAR(45) NOT NULL,
 	surname VARCHAR(45) NOT NULL,
-	num_document VARCHAR(8) NOT NULL,
 	telephone VARCHAR(15),
 	age INT NOT NULL,
 	status INT NOT NULL,
-	user_create VARCHAR(45),
-	date_create TIMESTAMP,
-	user_delete VARCHAR(45),
-	date_delete TIMESTAMP,
-	user_modif VARCHAR(45),
-	date_modif TIMESTAMP,
 	document_type_id_document_type INT NOT NULL,
 	FOREIGN KEY (document_type_id_document_type) REFERENCES documents_type (id_documents_type) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-CREATE TABLE IF NOT EXISTS teacher (
+CREATE TABLE IF NOT EXISTS enrollments (
+	id_enrollment SERIAL PRIMARY KEY,
+	enroll_date TIMESTAMP,
+	course_id_course INT NOT NULL,
+	student_id_student INT NOT NULL,
+	FOREIGN KEY (courses_course_id) REFERENCES courses (id_course) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	FOREIGN KEY (students_id_student) REFERENCES students (id_student) ON DELETE NO ACTION ON UPDATE NO ACTION,
+)
+
+CREATE TABLE IF NOT EXISTS teachers (
 	id_teacher SERIAL PRIMARY KEY,
+	num_document VARCHAR(8) NOT NULL,
 	name VARCHAR(45) NOT NULL,
 	surname VARCHAR(45) NOT NULL,
-	num_document VARCHAR(8) NOT NULL,
-	telephone VARCHAR(15),
+	telephone VARCHAR(15) NOT NULL,
+	address VARCHAR(255) NOT NULL,
+	career VARCHAR(200) NOT NULL,
+	degree VARCHAR(200) NOT NULL,
+	specialization VARCHAR(200) NOT NULL,
+	university_name VARCHAR(200) NOT NULL,
 	age INT NOT NULL,
-	status INT NOT NULL,
-	user_create VARCHAR(45),
-	date_create TIMESTAMP,
-	user_delete VARCHAR(45),
-	date_delete TIMESTAMP,
-	user_modif VARCHAR(45),
-	date_modif TIMESTAMP,
 	document_type_id_document_type INT NOT NULL,
 	FOREIGN KEY (document_type_id_document_type) REFERENCES documents_type (id_documents_type) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
@@ -86,9 +75,9 @@ CREATE TABLE IF NOT EXISTS score (
 	course_id_course INT NOT NULL,
 	student_id_student INT NOT NULL,
 	teacher_id_teacher INT NOT NULL,
-	FOREIGN KEY (course_id_course) REFERENCES course (id_course) ON DELETE NO ACTION ON UPDATE NO ACTION,
-	FOREIGN KEY (student_id_student) REFERENCES student (id_student) ON DELETE NO ACTION ON UPDATE NO ACTION,
-	FOREIGN KEY (teacher_id_teacher) REFERENCES teacher (id_teacher) ON DELETE NO ACTION ON UPDATE NO ACTION
+	FOREIGN KEY (course_id_course) REFERENCES courses (id_course) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	FOREIGN KEY (student_id_student) REFERENCES students (id_student) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	FOREIGN KEY (teacher_id_teacher) REFERENCES teachers (id_teacher) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 

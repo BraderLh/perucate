@@ -1,6 +1,8 @@
 package com.balh.perucate.agreggates.constants;
 
 public class Constants {
+    private Constants() {
+    }
     //Codes
     public static final Integer CODE_SUCCESS=200;
     public static final Integer CODE_ERROR=400;
@@ -30,7 +32,7 @@ public class Constants {
 
     //AUDIT
     public static final String AUDIT_ADMIN="ADMIN";
-    public static final String AUDIT_USER="AUTHORIZED USER";
+    public static final String AUDIT_USER= "USER";
 
     //REDISKEY
     public static final String REDIS_KEY_API_RENIEC_INFO="API:RENIEC:DATAFETCH";

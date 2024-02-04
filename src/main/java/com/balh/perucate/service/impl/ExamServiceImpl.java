@@ -3,7 +3,7 @@ package com.balh.perucate.service.impl;
 import com.balh.perucate.agreggates.constants.Constants;
 import com.balh.perucate.agreggates.request.RequestExam;
 import com.balh.perucate.agreggates.response.ResponseBase;
-import com.balh.perucate.entity.CourseEntity;
+import com.balh.perucate.entity.CoursesEntity;
 import com.balh.perucate.entity.ExamEntity;
 import com.balh.perucate.repository.CoursesRepository;
 import com.balh.perucate.repository.ExamRepository;
@@ -87,16 +87,16 @@ public class ExamServiceImpl implements ExamService {
         examEntity.setResolution(requestExam.getResolution());
         examEntity.setExamDate(new Timestamp(System.currentTimeMillis()));
         examEntity.setTime(requestExam.getTime());
-        examEntity.setCourseEntity(getEntityCreate(requestExam.getCourseEntityId()));
+        examEntity.setCoursesEntity(getCourse(requestExam.getCourseEntityId()));
         examEntity.setDateCreate(new Timestamp(System.currentTimeMillis()));
         examEntity.setStatus(Constants.STATUS_ACTIVE);
         examEntity.setUserCreate(Constants.AUDIT_ADMIN);
         return examEntity;
     }
 
-    private CourseEntity getEntityCreate(int courseEntityId) {
+    private CoursesEntity getCourse(int courseEntityId) {
         if (coursesRepository.existsById(courseEntityId)) {
-            Optional<CourseEntity> courseEntity = coursesRepository.findById(courseEntityId);
+            Optional<CoursesEntity> courseEntity = coursesRepository.findById(courseEntityId);
             return courseEntity.orElse(null);
         }
         else {
@@ -116,7 +116,7 @@ public class ExamServiceImpl implements ExamService {
         examEntity.setResolution(requestExam.getResolution());
         examEntity.setExamDate(new Timestamp(System.currentTimeMillis()));
         examEntity.setTime(requestExam.getTime());
-        examEntity.setCourseEntity(getEntityCreate(requestExam.getCourseEntityId()));
+        examEntity.setCoursesEntity(getCourse(requestExam.getCourseEntityId()));
         examEntity.setDateModify(new Timestamp(System.currentTimeMillis()));
         examEntity.setUserModify(Constants.AUDIT_ADMIN);
         return examEntity;

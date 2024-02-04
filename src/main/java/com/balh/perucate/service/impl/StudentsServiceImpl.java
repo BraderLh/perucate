@@ -88,15 +88,20 @@ public class StudentsServiceImpl implements StudentsService {
         studentsEntity.setSurname(requestStudent.getSurname());
         studentsEntity.setTelephone(requestStudent.getTelephone());
         studentsEntity.setAge(requestStudent.getAge());
-        studentsEntity.setDocumentsTypeEntity(getDocumentsType());
+        studentsEntity.setDocumentsTypeEntity(getDocumentsType(requestStudent.getDocumentTypeEntityId()));
         studentsEntity.setDateCreate(new Timestamp(System.currentTimeMillis()));
         studentsEntity.setStatus(Constants.STATUS_ACTIVE);
         studentsEntity.setUserCreate(Constants.AUDIT_ADMIN);
         return studentsEntity;
     }
 
-    private DocumentsTypeEntity getDocumentsType() {
-        return documentsTypeEntityRepository.findByCodType(Constants.COD_TYPE_DNI);
+    private DocumentsTypeEntity getDocumentsType(int documentTypeEntityId) {
+        if (documentsTypeEntityRepository.existsById(documentTypeEntityId)) {
+            Optional<DocumentsTypeEntity> documentsTypeEntity = documentsTypeEntityRepository.findById(documentTypeEntityId);
+            return documentsTypeEntity.orElse(null);
+        } else {
+            return null;
+        }
     }
 
     private StudentsEntity getEntityDelete(StudentsEntity studentsEntity) {

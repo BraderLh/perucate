@@ -3,23 +3,29 @@ package com.balh.perucate.service.impl;
 import com.balh.perucate.agreggates.constants.Constants;
 import com.balh.perucate.agreggates.request.RequestTeacher;
 import com.balh.perucate.agreggates.response.ResponseBase;
+import com.balh.perucate.entity.CoursesEntity;
+import com.balh.perucate.entity.DocumentsTypeEntity;
 import com.balh.perucate.entity.TeachersEntity;
+import com.balh.perucate.repository.CoursesRepository;
+import com.balh.perucate.repository.DocumentsTypeEntityRepository;
 import com.balh.perucate.repository.TeachersRepository;
 import com.balh.perucate.service.TeachersService;
 import com.balh.perucate.util.validations.TeacherValidation;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TeachersServiceImpl implements TeachersService {
+    private final CoursesRepository coursesRepository;
+    private final DocumentsTypeEntityRepository documentsTypeEntityRepository;
     private final TeachersRepository teachersRepository;
     private final TeacherValidation teacherValidation;
 
-    public TeachersServiceImpl(TeachersRepository teachersRepository, TeacherValidation teacherValidation) {
+    public TeachersServiceImpl(CoursesRepository coursesRepository, DocumentsTypeEntityRepository documentsTypeEntityRepository, TeachersRepository teachersRepository, TeacherValidation teacherValidation) {
+        this.coursesRepository = coursesRepository;
+        this.documentsTypeEntityRepository = documentsTypeEntityRepository;
         this.teachersRepository = teachersRepository;
         this.teacherValidation = teacherValidation;
     }
@@ -89,10 +95,31 @@ public class TeachersServiceImpl implements TeachersService {
         teachersEntity.setDegree(requestTeacher.getDegree());
         teachersEntity.setSpecialization(requestTeacher.getSpecialization());
         teachersEntity.setUniversityName(requestTeacher.getUniversityName());
+        teachersEntity.setDocumentsTypeEntity(getDocumentsType(requestTeacher.getDocumentTypeEntityId()));
+        teachersEntity.setCourseEntitiesSet(getCourses(requestTeacher.getIdsCourseEntities()));
         teachersEntity.setDateCreate(new Timestamp(System.currentTimeMillis()));
         teachersEntity.setStatus(Constants.STATUS_ACTIVE);
         teachersEntity.setUserCreate(Constants.AUDIT_ADMIN);
         return teachersEntity;
+    }
+
+    private Set<CoursesEntity> getCourses(Set<CoursesEntity> idsCourseEntities) {
+        Set<CoursesEntity> courseEntities = new HashSet<>();
+        for (CoursesEntity idsCoursesEntity : idsCourseEntities) {
+            if (coursesRepository.existsById(idsCoursesEntity.getIdCourse())) {
+                courseEntities.add(idsCoursesEntity);
+            }
+        }
+        return courseEntities;
+    }
+
+    private DocumentsTypeEntity getDocumentsType(int documentTypeEntityId) {
+        if (documentsTypeEntityRepository.existsById(documentTypeEntityId)) {
+            Optional<DocumentsTypeEntity> documentsTypeEntity = documentsTypeEntityRepository.findById(documentTypeEntityId);
+            return documentsTypeEntity.orElse(null);
+        } else {
+            return null;
+        }
     }
 
     private TeachersEntity getEntityDelete(TeachersEntity teachersEntity) {
@@ -113,6 +140,7 @@ public class TeachersServiceImpl implements TeachersService {
         teachersEntity.setDegree(requestTeacher.getDegree());
         teachersEntity.setSpecialization(requestTeacher.getSpecialization());
         teachersEntity.setUniversityName(requestTeacher.getUniversityName());
+        teachersEntity.setCourseEntitiesSet(getCourses(requestTeacher.getIdsCourseEntities()));
         teachersEntity.setDateModify(new Timestamp(System.currentTimeMillis()));
         teachersEntity.setUserModify(Constants.AUDIT_ADMIN);
         return teachersEntity;
