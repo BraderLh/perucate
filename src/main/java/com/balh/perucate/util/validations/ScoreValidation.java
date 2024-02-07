@@ -19,7 +19,7 @@ public class ScoreValidation {
         }
 
         return isNullOrEmpty(String.valueOf(requestScore.getScore())) ||
-                isNullOrEmpty(String.valueOf(requestScore.getExamEntity())) ||
+                isNullOrEmpty(String.valueOf(requestScore.getExamEntityId())) ||
                 isNullOrEmpty(String.valueOf(requestScore.getStudentsEntityId())) ||
                 isNullOrEmpty(String.valueOf(requestScore.getTeachersEntityId()));
     }

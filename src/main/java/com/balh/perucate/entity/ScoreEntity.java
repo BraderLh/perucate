@@ -1,6 +1,7 @@
 package com.balh.perucate.entity;
 
 import com.balh.perucate.entity.common.Audit;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,5 +35,6 @@ public class ScoreEntity extends Audit {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id_teacher", referencedColumnName = "id_teacher", nullable = false)
+    @JsonBackReference(value = "teachers-scores")
     private TeachersEntity teachersEntity;
 }

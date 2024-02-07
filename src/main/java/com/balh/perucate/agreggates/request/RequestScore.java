@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class RequestScore {
     int score;
-    private int examEntity;
+    private int examEntityId;
     private int studentsEntityId;
     private int teachersEntityId;
 }

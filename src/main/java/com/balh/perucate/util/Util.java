@@ -1,6 +1,6 @@
 package com.balh.perucate.util;
 
-import com.balh.perucate.agreggates.response.ResponseSunat;
+import com.balh.perucate.agreggates.response.ResponseReniec;
 import com.balh.perucate.entity.StudentsEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -16,10 +16,10 @@ public class Util {
     private Util() {
     }
 
-    public static String convertToJson(ResponseSunat responseSunat) {
+    public static String convertToJson(ResponseReniec responseReniec) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.writeValueAsString(responseSunat);
+            return objectMapper.writeValueAsString(responseReniec);
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;

@@ -19,6 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@NamedQuery(name = "StudentsEntity.findByNumDoc", query = "select a from StudentsEntity a where a.numDocument=:doc")
 public class StudentsEntity extends Audit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +50,6 @@ public class StudentsEntity extends Audit {
     private Set<EnrollmentsEntity> enrollmentsStudent = new HashSet<>();
 
     @OneToMany(mappedBy = "studentsEntity", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    //@JsonManagedReference
     private Set<ScoreEntity> scoreStudentEntitySet = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

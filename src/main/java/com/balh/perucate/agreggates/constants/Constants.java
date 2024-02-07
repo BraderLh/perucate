@@ -10,14 +10,15 @@ public class Constants {
     //MESSAGES
     public static final String MESS_SUCCESS="Execution successful";
     public static final String MESS_ERROR="Execution error";
+    public static final String MESS_ERROR_LOGIN="Error: Failed authentication, sign up or invalid credentials";
     public static final String MESS_ERROR_DATA_NOT_VALID="Error: Invalid data, ID or field not valid";
-    public static final String MESS_NON_DATA="Error: Non data or record exists";
     public static final String MESS_NOT_FOUND_ID="Error: Id not exists or is not correct";
     public static final String MESS_ZERO_ROWS="Error: No rows or zero rows for this request";
     public static final String MESS_ERROR_NOT_DELETE = "Error: Fail deleting, something wrong happened";
     public static final String MESS_ERROR_NOT_FIND = "Error: Fail searching, something wrong happened";
     public static final String MESS_ERROR_NOT_UPDATE ="Error: Fail updating, something wrong happened";
-    public static final String MESS_NON_DATA_RENIEC = "Non data in RENIEC database";
+    public static final String MESS_ERROR_NON_RENIEC_DATA ="Error: Non exists data in RENIEC";
+
 
     //CodType
     public static final String COD_TYPE_DNI = "01";
@@ -33,8 +34,10 @@ public class Constants {
     //AUDIT
     public static final String AUDIT_ADMIN="ADMIN";
     public static final String AUDIT_USER= "USER";
+    public static final String AUDIT_ROLE_STUDENT= "STUDENT";
+    public static final String AUDIT_ROLE_TEACHER= "TEACHER";
 
     //REDISKEY
-    public static final String REDIS_KEY_API_RENIEC_INFO="API:RENIEC:DATAFETCH";
-    public static final String REDIS_KEY_INFO_RENIEC_REDIS="API:RENIEC:DATA";
+    public static final String REDIS_KEY_API_RENIEC_INFO="API:RENIEC:DATA:INFO:";
+    public static final String REDIS_KEY_INFO_RENIEC_REDIS="API:RENIEC:DATA:PERUCATE:";
 }

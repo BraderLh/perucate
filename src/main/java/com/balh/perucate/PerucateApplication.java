@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.balh.*")
 @EnableFeignClients("com.balh.perucate")
 @ImportAutoConfiguration({FeignAutoConfiguration.class})
 public class PerucateApplication {

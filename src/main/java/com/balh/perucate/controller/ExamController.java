@@ -15,27 +15,27 @@ public class ExamController {
     }
 
     @PostMapping
-    public ResponseBase createScore(@RequestBody RequestExam requestExam) {
+    public ResponseBase createExam(@RequestBody RequestExam requestExam) {
         return examService.createExam(requestExam);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseBase deleteScore(@PathVariable Integer id) {
+    public ResponseBase deleteExam(@PathVariable Integer id) {
         return examService.deleteExam(id);
     }
 
     @GetMapping
-    public ResponseBase findAllScores() {
+    public ResponseBase findAllExam() {
         return examService.findAllExams();
     }
 
     @GetMapping("/{id}")
-    public ResponseBase findOneScore(@PathVariable Integer id) {
+    public ResponseBase findOneExam(@PathVariable Integer id) {
         return examService.findOneExam(id);
     }
 
     @PatchMapping("/{id}")
-    public ResponseBase updateStudent(@PathVariable Integer id, @RequestBody RequestExam requestExam) {
+    public ResponseBase updateExam(@PathVariable Integer id, @RequestBody RequestExam requestExam) {
         return examService.updateExam(id, requestExam);
     }
 }

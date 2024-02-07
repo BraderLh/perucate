@@ -29,9 +29,9 @@ public class StudentsController {
         return studentsService.findAllStudents();
     }
 
-    @GetMapping("/{id}")
-    public ResponseBase findOneStudent(@PathVariable int id) {
-        return studentsService.findOneStudent(id);
+    @GetMapping("/{doc}")
+    public ResponseBase findOneStudent(@PathVariable String doc) {
+        return studentsService.findOneStudent(doc);
     }
 
     @PatchMapping("/{id}")

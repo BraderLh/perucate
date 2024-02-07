@@ -5,9 +5,11 @@ import com.balh.perucate.agreggates.request.RequestScore;
 import com.balh.perucate.agreggates.response.ResponseBase;
 import com.balh.perucate.entity.ExamEntity;
 import com.balh.perucate.entity.ScoreEntity;
+import com.balh.perucate.entity.StudentsEntity;
 import com.balh.perucate.entity.TeachersEntity;
 import com.balh.perucate.repository.ExamRepository;
 import com.balh.perucate.repository.ScoreRepository;
+import com.balh.perucate.repository.StudentsRepository;
 import com.balh.perucate.repository.TeachersRepository;
 import com.balh.perucate.service.ScoreService;
 import com.balh.perucate.util.validations.ScoreValidation;
@@ -23,12 +25,14 @@ public class ScoreServiceImpl implements ScoreService {
     private final ExamRepository examRepository;
     private final ScoreRepository scoreRepository;
     private final ScoreValidation scoreValidation;
+    private final StudentsRepository studentsRepository;
     private final TeachersRepository teachersRepository;
 
-    public ScoreServiceImpl(ExamRepository examRepository, ScoreRepository scoreRepository, ScoreValidation scoreValidation, TeachersRepository teachersRepository) {
+    public ScoreServiceImpl(ExamRepository examRepository, ScoreRepository scoreRepository, ScoreValidation scoreValidation, StudentsRepository studentsRepository, TeachersRepository teachersRepository) {
         this.examRepository = examRepository;
         this.scoreRepository = scoreRepository;
         this.scoreValidation = scoreValidation;
+        this.studentsRepository = studentsRepository;
         this.teachersRepository = teachersRepository;
     }
 
@@ -88,15 +92,26 @@ public class ScoreServiceImpl implements ScoreService {
     private ScoreEntity getEntityCreate(RequestScore requestScore) {
         ScoreEntity scoreEntity = new ScoreEntity();
         scoreEntity.setScore(requestScore.getScore());
-        scoreEntity.setExamEntity(getExamEntity(requestScore.getStudentsEntityId()));
+        scoreEntity.setExamEntity(getExamEntity(requestScore.getExamEntityId()));
+        scoreEntity.setStudentsEntity(getStudentEntity(requestScore.getStudentsEntityId()));
         scoreEntity.setTeachersEntity(getTeacherEntity(requestScore.getTeachersEntityId()));
         return scoreEntity;
     }
 
-    private ExamEntity getExamEntity(int studentsEntityId) {
-        if (examRepository.existsById(studentsEntityId)) {
-            Optional<ExamEntity> examEntity = examRepository.findById(studentsEntityId);
+    private ExamEntity getExamEntity(int examEntityId) {
+        if (examRepository.existsById(examEntityId)) {
+            Optional<ExamEntity> examEntity = examRepository.findById(examEntityId);
             return examEntity.orElse(null);
+        }
+        else {
+            return null;
+        }
+    }
+
+    private StudentsEntity getStudentEntity(int studentsEntityId) {
+        if (examRepository.existsById(studentsEntityId)) {
+            Optional<StudentsEntity> studentsEntity = studentsRepository.findById(studentsEntityId);
+            return studentsEntity.orElse(null);
         }
         else {
             return null;

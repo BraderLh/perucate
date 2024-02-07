@@ -27,8 +27,7 @@ public class StudentValidation {
             return false;
         }
 
-        return isNullOrEmpty(requestStudent.getName()) || isNullOrEmpty(requestStudent.getSurname()) ||
-                isNullOrEmpty(requestStudent.getNumDocument()) || isNullOrEmpty(requestStudent.getTelephone()) ||
+        return  isNullOrEmpty(requestStudent.getNumDocument()) || isNullOrEmpty(requestStudent.getTelephone()) ||
                 isNullOrEmpty(String.valueOf(requestStudent.getAge()));
     }
 }

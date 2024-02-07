@@ -1,7 +1,9 @@
 package com.balh.perucate.entity;
 
 import com.balh.perucate.entity.common.Audit;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -57,8 +59,10 @@ public class TeachersEntity extends Audit {
     @ManyToOne
     @JoinColumn(name = "document_type_id_document_type", referencedColumnName = "id_documents_type", nullable = false)
     private DocumentsTypeEntity documentsTypeEntity;
-    
+
+    @JsonIgnore
     @OneToMany(mappedBy = "teachersEntity", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @JsonManagedReference(value = "teachers-scores")
     private Set<ScoreEntity> scoreTeacherEntitySet = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
